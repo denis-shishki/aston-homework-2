@@ -9,7 +9,7 @@
     <packaging>war</packaging>
     <version>1.0-SNAPSHOT</version>
     <name>aston-homework-2 Maven Webapp</name>
-<!--    <url>http://maven.apache.org</url>-->
+    <!--    <url>http://maven.apache.org</url>-->
 
     <build>
         <plugins>
@@ -37,6 +37,22 @@
 
     <dependencies>
         <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>42.7.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.30</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>2.8.9</version>
+        </dependency>
+        <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>3.8.1</version>
@@ -48,7 +64,7 @@
             <version>4.0.1</version>
         </dependency>
     </dependencies>
-<!--    <build>-->
-<!--        <finalName>aston-homework-2</finalName>-->
-<!--    </build>-->
+    <!--    <build>-->
+    <!--        <finalName>aston-homework-2</finalName>-->
+    <!--    </build>-->
 </project>
