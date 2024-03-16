@@ -1,39 +1,59 @@
 package service.impl;
 
+import entity.Genre;
+import entity.Genre;
 import entity.dto.GenreDto;
+import exception.NotFoundException;
 import exception.ValidateException;
+import mapper.GenreMapper;
+import mapper.GenreMapper;
 import repository.GenreRepository;
 import service.GenreService;
 
 import java.util.List;
+import java.util.Optional;
 
 public class GenreServiceImpl implements GenreService {
     private final GenreRepository genreRepository;
-//    private final GenreMapper genreMapper;
+
 
     public GenreServiceImpl(GenreRepository genreRepository) {
         this.genreRepository = genreRepository;
-//        genreMapper = new GenreMapper(this);
     }
 
     @Override
     public GenreDto postGenre(GenreDto genreDto) {
-        return null;
+        checkValid(genreDto);
+
+        Genre requestGenre = GenreMapper.toEntity(genreDto);
+        Genre responseGenre = genreRepository.postGenre(requestGenre);
+
+        return GenreMapper.toDto(responseGenre);
     }
 
     @Override
-    public GenreDto getGenre(GenreDto genreDto) {
-        return null;
+    public GenreDto getGenreById(long genreId) {
+        Optional<Genre> genreOptional = genreRepository.getGenreById(genreId);
+        if(genreOptional.isPresent()){
+            return GenreMapper.toDto(genreOptional.get());
+        } else {
+            throw new NotFoundException("Genre not found");
+        }
     }
 
     @Override
-    public GenreDto removeGenre(GenreDto genreDto) {
-        return null;
+    public void removeGenre(long genreId) {
+        genreRepository.removeGenre(genreId);
     }
 
     @Override
     public GenreDto patchGenre(GenreDto genreDto) {
-        return null;
+        checkValid(genreDto);
+
+        Genre requestGenre = GenreMapper.toEntity(genreDto);
+        Genre responseGenre = genreRepository.patchGenre(requestGenre);
+
+        return GenreMapper.toDto(responseGenre);
     }
 
     @Override
@@ -42,6 +62,12 @@ public class GenreServiceImpl implements GenreService {
             if (!genreRepository.checkExistGenreById(genre.getId())) {
                 throw new ValidateException("genre with this identifier does not exist");
             }
+        }
+    }
+
+    private void checkValid(GenreDto genreDto) {
+        if (genreDto.getName() == null || genreDto.getName().isEmpty()) {
+            throw new ValidateException("name cannot be empty");
         }
     }
 

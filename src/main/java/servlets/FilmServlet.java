@@ -20,6 +20,14 @@ public class FilmServlet extends HttpServlet {
     private Gson gson;
 
     @Override
+    public void init(ServletConfig config) {
+        beanManager = new BeanManager();
+        beanManager.init();
+        filmService = beanManager.getFilmService();
+        gson = beanManager.getGson();
+    }
+
+    @Override
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         FilmDto filmDto = readBodyToFilmDto(req);
 
@@ -32,19 +40,6 @@ public class FilmServlet extends HttpServlet {
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) {
         long id = parseIdFromPath(req);
         filmService.removeFilm(id);
-    }
-
-    @Override
-    public void init(ServletConfig config) {
-        beanManager = new BeanManager();
-        beanManager.init();
-        filmService = beanManager.getFilmService();
-        gson = new Gson();
-    }
-
-    @Override
-    protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.service(req, resp);
     }
 
     @Override

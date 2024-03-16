@@ -1,5 +1,6 @@
 package BeanManager;
 
+import com.google.gson.Gson;
 import lombok.Getter;
 import repository.FilmRepository;
 import repository.GenreRepository;
@@ -13,6 +14,8 @@ public class BeanManager {
     private FilmService filmService;
     @Getter
     private GenreService genreService;
+    @Getter
+    private Gson gson;
 
     public void init() {
         GenreRepository genreRepository =  createGenreRepository();
@@ -20,6 +23,7 @@ public class BeanManager {
 
         FilmRepository filmRepository = createFilmRepository();
         filmService = createFilmService(filmRepository, genreService);
+        gson = new Gson();
     }
 
     private FilmService createFilmService(FilmRepository filmRepository, GenreService genreService) {

@@ -17,7 +17,7 @@ public class FilmRepository {
         try (Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/film", "postgres", "postgres")) {
             String sql = "INSERT INTO films (name, description) VALUES( ?, ?);";
 
-            try (PreparedStatement preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) { //сохранили фильм
+            try (PreparedStatement preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
                 preparedStatement.setString(1, film.getName());
                 preparedStatement.setString(2, film.getDescription());
 
@@ -46,7 +46,7 @@ public class FilmRepository {
             try (Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/film", "postgres", "postgres")) {
                 String sql = "update films set name = ?, description = ? where film_id = ?;";
 
-                try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) { //сохранили фильм
+                try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
                     preparedStatement.setString(1, film.getName());
                     preparedStatement.setString(2, film.getDescription());
                     preparedStatement.setLong(3, film.getId());
@@ -64,8 +64,6 @@ public class FilmRepository {
         } else {
             throw new NotFoundException("Film not found");
         }
-
-
     }
 
     public void removeGenreFromFilm(Film oldFilm, Connection connection) {
