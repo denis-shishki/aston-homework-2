@@ -25,9 +25,19 @@ public class FilmServiceImpl implements FilmService {
         checkValid(filmDto);
 
         Film requestFilm = FilmMapper.toFilm(filmDto);
-        Film responseFilm = filmRepository.postFilm(requestFilm); //понять что происходит с id
+        Film responseFilm = filmRepository.postFilm(requestFilm);
 
-        return FilmMapper.toDto(requestFilm);
+        return FilmMapper.toDto(responseFilm);
+    }
+
+    @Override
+    public FilmDto patchFilm(FilmDto filmDto) {
+        checkValid(filmDto);
+
+        Film requestFilm = FilmMapper.toFilm(filmDto);
+        Film responseFilm = filmRepository.patchFilm(requestFilm);
+
+        return FilmMapper.toDto(responseFilm);
     }
 
     @Override
@@ -41,13 +51,8 @@ public class FilmServiceImpl implements FilmService {
     }
 
     @Override
-    public FilmDto removeFilm(FilmDto filmDto) {
-        return null;
-    }
-
-    @Override
-    public FilmDto patchFilm(FilmDto filmDto) {
-        return null;
+    public void removeFilm(long filmId) {
+        filmRepository.removeFilm(filmId);
     }
 
     private void checkValid(FilmDto filmDto) {

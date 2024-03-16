@@ -2,6 +2,7 @@ package repository;
 
 import entity.Film;
 import entity.Genre;
+import exception.NotFoundException;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -9,18 +10,9 @@ import java.util.List;
 import java.util.Optional;
 
 public class FilmRepository {
-//    private final GenreRepository genreRepository;
-//
-//    public FilmRepository(GenreRepository genreRepository) {
-//        this.genreRepository = genreRepository;
-//    }
 
     public Film postFilm(Film film) {
-        boolean presentGenres = false;
-
-        if (film.getGenres() != null) {
-            presentGenres = true;
-        }
+        boolean presentGenres = film.getGenres() != null;
 
         try (Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/film", "postgres", "postgres")) {
             String sql = "INSERT INTO films (name, description) VALUES( ?, ?);";
@@ -33,7 +25,7 @@ public class FilmRepository {
 
                 ResultSet keys = preparedStatement.getGeneratedKeys();
                 if (keys.next()) {
-                    film.setId(keys.getLong("films_id"));
+                    film.setId(keys.getLong("film_id"));
                 }
 
             }
@@ -46,8 +38,49 @@ public class FilmRepository {
         return film;
     }
 
+    public Film patchFilm(Film film) {
+        boolean presentGenres = film.getGenres() != null;
+        Optional<Film> oldFilm = getFilmById(film.getId());
+
+        if (oldFilm.isPresent()) {
+            try (Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/film", "postgres", "postgres")) {
+                String sql = "update films set name = ?, description = ? where film_id = ?;";
+
+                try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) { //сохранили фильм
+                    preparedStatement.setString(1, film.getName());
+                    preparedStatement.setString(2, film.getDescription());
+                    preparedStatement.setLong(3, film.getId());
+
+                    preparedStatement.executeUpdate();
+                }
+
+                removeGenreFromFilm(oldFilm.get(), connection);
+                if (presentGenres) saveGenreInFilm(film, connection);
+
+            } catch (RuntimeException | SQLException e) {
+                throw new RuntimeException(e);
+            }
+            return film;
+        } else {
+            throw new NotFoundException("Film not found");
+        }
+
+
+    }
+
+    public void removeGenreFromFilm(Film oldFilm, Connection connection) {
+        String sql = "DELETE FROM films_genre WHERE film_id = ?;";
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setLong(1, oldFilm.getId());
+            preparedStatement.executeBatch();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public void saveGenreInFilm(Film film, Connection connection) throws SQLException {
-        String sql = "INSERT INTO films_genre (films_id, genre_id) VALUES(?, ?);";
+        String sql = "INSERT INTO films_genre (film_id, genre_id) VALUES(?, ?);";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
             for (Genre genre : film.getGenres()) {
@@ -88,8 +121,8 @@ public class FilmRepository {
     }
 
     private void addGenres(Film film, Connection connection) {
-        String sqlForGenres = "select * from genre where genre_id in (select genre_id from films_genre where film_id = ?);";
-        try (PreparedStatement preparedStatement = connection.prepareStatement(sqlForGenres)) {
+        String sql = "select * from genre where genre_id in (select genre_id from films_genre where film_id = ?);";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setLong(1, film.getId());
 
             ResultSet rs = preparedStatement.executeQuery();
@@ -108,11 +141,20 @@ public class FilmRepository {
         }
     }
 
-    public Film removeFilm(Film film) {
-        return null;
-    }
+    public void removeFilm(long filmId) {
+        try (Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/film", "postgres", "postgres")) {
+            String sql = "DELETE FROM films WHERE film_id = ?;";
 
-    public Film patchFilm(Film film) {
-        return null;
+            try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+                preparedStatement.setLong(1, filmId);
+
+                preparedStatement.executeUpdate();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
+

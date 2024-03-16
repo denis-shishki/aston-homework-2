@@ -5,6 +5,6 @@ import entity.dto.FilmDto;
 public interface FilmService {
     FilmDto postFilm(FilmDto filmDto);
     FilmDto getFilmById(long filmId);
-    FilmDto removeFilm(FilmDto filmDto);
+    void removeFilm(long filmId);
     FilmDto patchFilm(FilmDto filmDto);
 }

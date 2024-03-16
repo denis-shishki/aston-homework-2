@@ -3,6 +3,7 @@ package servlets;
 import BeanManager.BeanManager;
 import com.google.gson.Gson;
 import entity.dto.FilmDto;
+import exception.ValidateException;
 import service.FilmService;
 
 import javax.servlet.ServletConfig;
@@ -19,7 +20,22 @@ public class FilmServlet extends HttpServlet {
     private Gson gson;
 
     @Override
-    public void init(ServletConfig config) throws ServletException {
+    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        FilmDto filmDto = readBodyToFilmDto(req);
+
+        FilmDto responseFilm = filmService.patchFilm(filmDto);
+
+        writeBody(resp, responseFilm);
+    }
+
+    @Override
+    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) {
+        long id = parseIdFromPath(req);
+        filmService.removeFilm(id);
+    }
+
+    @Override
+    public void init(ServletConfig config) {
         beanManager = new BeanManager();
         beanManager.init();
         filmService = beanManager.getFilmService();
@@ -33,8 +49,7 @@ public class FilmServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        String jsonBody = readBodyToString(req);
-        FilmDto filmDto = gson.fromJson(jsonBody, FilmDto.class);
+        FilmDto filmDto = readBodyToFilmDto(req);
 
         FilmDto responseFilm = filmService.postFilm(filmDto);
 
@@ -42,7 +57,15 @@ public class FilmServlet extends HttpServlet {
     }
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) {
+        long id = parseIdFromPath(req);
+
+        FilmDto filmResponse = filmService.getFilmById(id);
+
+        writeBody(resp, filmResponse);
+    }
+
+    private long parseIdFromPath(HttpServletRequest req) {
         String pathInfo = req.getPathInfo();
 
         if (pathInfo != null && pathInfo.length() > 1) {
@@ -50,16 +73,13 @@ public class FilmServlet extends HttpServlet {
             String lastPart = pathParts[pathParts.length - 1];
 
             try {
-                int id = Integer.parseInt(lastPart);
-                FilmDto filmResponse = filmService.getFilmById(id);
-
-                writeBody(resp, filmResponse);
+                return Long.parseLong(lastPart);
             } catch (NumberFormatException e) {
-                resp.getWriter().println("Cannot deduce digit from path");
+                throw new NumberFormatException("Cannot deduce digit from path");
             }
 
         } else {
-            resp.getWriter().println("Path does not contain numbers");
+            throw new ValidateException("Path does not contain numbers");
         }
     }
 
@@ -74,7 +94,7 @@ public class FilmServlet extends HttpServlet {
 
     }
 
-    private String readBodyToString(HttpServletRequest req) throws IOException {//проверить на null
+    private FilmDto readBodyToFilmDto(HttpServletRequest req) throws IOException {
         try (InputStream inputStream = req.getInputStream()) {
             BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
             StringBuilder jsonBody = new StringBuilder();
@@ -83,10 +103,7 @@ public class FilmServlet extends HttpServlet {
             while ((line = reader.readLine()) != null) {
                 jsonBody.append(line);
             }
-
-            return jsonBody.toString();
+            return gson.fromJson(jsonBody.toString(), FilmDto.class);
         }
-
-
     }
 }
