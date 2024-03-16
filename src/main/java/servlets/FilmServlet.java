@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
-import java.sql.*;
 
 public class FilmServlet extends HttpServlet {
     private BeanManager beanManager;
@@ -21,7 +20,6 @@ public class FilmServlet extends HttpServlet {
 
     @Override
     public void init(ServletConfig config) throws ServletException {
-//        super.init(config);
         beanManager = new BeanManager();
         beanManager.init();
         filmService = beanManager.getFilmService();
@@ -35,57 +33,60 @@ public class FilmServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        InputStream inputStream = req.getInputStream();
+        String jsonBody = readBodyToString(req);
+        FilmDto filmDto = gson.fromJson(jsonBody, FilmDto.class);
 
-        BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
-        StringBuilder jsonBody = new StringBuilder();
-        String line;
+        FilmDto responseFilm = filmService.postFilm(filmDto);
 
-        while ((line = reader.readLine()) != null) {
-            jsonBody.append(line);
-        }
-
-        FilmDto filmDto = gson.fromJson(jsonBody.toString(), FilmDto.class);
-
-        FilmDto responseFilm = filmService.postFilm(filmDto); //нужно ли самостоятельно оборачивать ошибки? как в случае ошибок выбрать код ответа? так много вопросов
-
-        resp.setContentType("application/json");
-        OutputStream outputStream = resp.getOutputStream();
-
-        String responseJson = gson.toJson(responseFilm);
-        outputStream.write(responseJson.getBytes(StandardCharsets.UTF_8));
-        outputStream.close();
+        writeBody(resp, responseFilm);
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        PrintWriter pw = resp.getWriter();
-        Connection connection = null;
+        String pathInfo = req.getPathInfo();
 
-        try {
-            Class.forName("org.postgresql.Driver");
-            connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/film", "postgres", "postgres");
-            Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("select * from public.films;");
+        if (pathInfo != null && pathInfo.length() > 1) {
+            String[] pathParts = pathInfo.split("/");
+            String lastPart = pathParts[pathParts.length - 1];
 
-            while (resultSet.next()) {
-                pw.println(resultSet.getString("name"));
+            try {
+                int id = Integer.parseInt(lastPart);
+                FilmDto filmResponse = filmService.getFilmById(id);
+
+                writeBody(resp, filmResponse);
+            } catch (NumberFormatException e) {
+                resp.getWriter().println("Cannot deduce digit from path");
             }
 
-        } catch (ClassNotFoundException | RuntimeException | SQLException e) {
-            throw new RuntimeException(e);
-        } finally {
-            if (connection != null) {
-                try {
-                    connection.close();
-                } catch (SQLException ignored) {
-                }
-            }
+        } else {
+            resp.getWriter().println("Path does not contain numbers");
         }
     }
 
-//    @Override
-//    public void destroy() {
-////        log("Method destroy =)");
-//    }
+    private void writeBody(HttpServletResponse resp, FilmDto responseFilm) {
+        try (OutputStream outputStream = resp.getOutputStream()) {
+            resp.setContentType("application/json");
+            String responseJson = gson.toJson(responseFilm);
+            outputStream.write(responseJson.getBytes(StandardCharsets.UTF_8));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+    private String readBodyToString(HttpServletRequest req) throws IOException {//проверить на null
+        try (InputStream inputStream = req.getInputStream()) {
+            BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+            StringBuilder jsonBody = new StringBuilder();
+            String line;
+
+            while ((line = reader.readLine()) != null) {
+                jsonBody.append(line);
+            }
+
+            return jsonBody.toString();
+        }
+
+
+    }
 }

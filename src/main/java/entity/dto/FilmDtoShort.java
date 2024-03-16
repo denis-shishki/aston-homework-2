@@ -1,31 +1,29 @@
 package entity.dto;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
 import java.util.Objects;
 
 @Data
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class GenreDto {
+public class FilmDtoShort {
     Long id;
     String name;
+    String description;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        GenreDto genreDto = (GenreDto) o;
-        return Objects.equals(id, genreDto.id) && Objects.equals(name, genreDto.name);
+        FilmDtoShort that = (FilmDtoShort) o;
+        return Objects.equals(id, that.id) && Objects.equals(name, that.name) && Objects.equals(description, that.description);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name);
+        return Objects.hash(id, name, description);
     }
 }
