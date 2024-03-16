@@ -19,4 +19,7 @@
         <servlet-name>GenreServlet</servlet-name>
         <url-pattern>/genre/*</url-pattern>
     </servlet-mapping>
+    <listener>
+        <listener-class>DatabaseInitializer</listener-class>
+    </listener>
 </web-app>
