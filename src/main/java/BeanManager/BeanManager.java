@@ -9,16 +9,14 @@ import service.GenreService;
 import service.impl.FilmServiceImpl;
 import service.impl.GenreServiceImpl;
 
+@Getter
 public class BeanManager {
-    @Getter
     private FilmService filmService;
-    @Getter
     private GenreService genreService;
-    @Getter
     private Gson gson;
 
     public void init() {
-        GenreRepository genreRepository =  createGenreRepository();
+        GenreRepository genreRepository = createGenreRepository();
         genreService = createGenreService(genreRepository);
 
         FilmRepository filmRepository = createFilmRepository();
@@ -37,6 +35,7 @@ public class BeanManager {
     private GenreRepository createGenreRepository() {
         return new GenreRepository();
     }
+
     private GenreService createGenreService(GenreRepository genreRepository) {
         return new GenreServiceImpl(genreRepository);
     }

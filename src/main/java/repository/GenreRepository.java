@@ -1,15 +1,16 @@
 package repository;
 
 import entity.Genre;
-import entity.Genre;
 import exception.NotFoundException;
 
 import java.sql.*;
 import java.util.Optional;
 
+import static Database.DBInitializer.*;
+
 public class GenreRepository {
     public Genre postGenre(Genre genre) {
-        try (Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/film", "postgres", "postgres")) {
+        try (Connection connection = DriverManager.getConnection(getUrl(), getUsername(), getPassword())) {
             String sql = "INSERT INTO genre (name) VALUES (?);";
 
             try (PreparedStatement preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
@@ -31,7 +32,7 @@ public class GenreRepository {
     public Optional<Genre> getGenreById(long genreId) {
         Genre genre;
 
-        try (Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/film", "postgres", "postgres")) {
+        try (Connection connection = DriverManager.getConnection(getUrl(), getUsername(), getPassword())) {
             String sql = "select * from genre where genre_id = ?;";
 
             try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
@@ -53,7 +54,7 @@ public class GenreRepository {
     }
 
     public void removeGenre(long genreId) {
-        try (Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/film", "postgres", "postgres")) {
+        try (Connection connection = DriverManager.getConnection(getUrl(), getUsername(), getPassword())) {
             String sql = "DELETE FROM genre WHERE genre_id = ?;";
 
             try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
@@ -72,7 +73,7 @@ public class GenreRepository {
         Optional<Genre> oldGenre = getGenreById(genre.getId());
 
         if (oldGenre.isPresent()) {
-            try (Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/film", "postgres", "postgres")) {
+            try (Connection connection = DriverManager.getConnection(getUrl(), getUsername(), getPassword())) {
                 String sql = "update genre set name = ? where genre_id = ?;";
 
                 try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
@@ -92,7 +93,6 @@ public class GenreRepository {
     }
 
     public boolean checkExistGenreById(long id) {
-
-        return true;
+        return getGenreById(id).isPresent();
     }
 }

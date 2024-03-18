@@ -20,6 +20,6 @@
         <url-pattern>/genre/*</url-pattern>
     </servlet-mapping>
     <listener>
-        <listener-class>DatabaseInitializer</listener-class>
+        <listener-class>Database.DBInitializer</listener-class>
     </listener>
 </web-app>

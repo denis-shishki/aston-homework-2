@@ -9,10 +9,27 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c431e5c5-20f6-4e37-a984-d23fa93c5b8f" name="Changes" comment="&lt;feat&gt; Подключить бд, разбить на все основные слои, начать обрабатывать эндпоинты для фильмов">
+    <list default="true" id="c431e5c5-20f6-4e37-a984-d23fa93c5b8f" name="Changes" comment="&lt;feat&gt; Добавить тесты для слоев сервисов">
+      <change afterPath="$PROJECT_DIR$/src/test/java/service/impl/FilmServiceImplTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/service/impl/GenreServiceImplTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/BeanManager/BeanManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/BeanManager/BeanManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DatabaseInitializer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Database/DBInitializer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/entity/Genre.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/entity/Genre.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/entity/dto/FilmDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/entity/dto/FilmDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/entity/dto/GenreDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/entity/dto/GenreDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/entity/dto/GenreDtoShort.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/entity/dto/GenreDtoShort.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/exception/NotFoundException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/exception/NotFoundException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/mapper/GenreMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/mapper/GenreMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/repository/FilmRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/repository/FilmRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/repository/GenreRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/repository/GenreRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/service/FilmService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/service/FilmService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/service/GenreService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/service/GenreService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/service/impl/FilmServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/service/impl/FilmServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/service/impl/GenreServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/service/impl/GenreServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/servlets/FilmServlet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/servlets/FilmServlet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -25,6 +42,7 @@
         <option value="Jsp File" />
         <option value="Interface" />
         <option value="Class" />
+        <option value="JUnit5 Test Class" />
       </list>
     </option>
   </component>
@@ -53,74 +71,135 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
-    &quot;Maven. [org.apache.maven.plugins:maven-archetype-plugin:RELEASE:generate].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.aston-homework-2 [clean].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.aston-homework-2 [deploy].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.aston-homework-2 [jetty:run].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.aston-homework-2 [package].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.servlet [clean].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.servlet [package].executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;Tomcat Server.Unnamed.executor&quot;: &quot;Debug&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/Denis/IdeaProjects/java-kanban&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "JUnit.FilmServiceImplTest.executor": "Run",
+    "JUnit.FilmServiceImplTest.patchFilm_withoutGenre_returnFilm.executor": "Debug",
+    "JUnit.FilmServiceImplTest.postFilm_withGenre_returnFilm.executor": "Run",
+    "JUnit.FilmServiceImplTest.postFilm_withoutGenre_returnFilm.executor": "Run",
+    "JUnit.GenreServiceImplTest.executor": "Profiler#1",
+    "JUnit.GenreServiceImplTest.postGenre_withoutName_trowsValidateException.executor": "Run",
+    "JUnit.java in aston-homework-2.executor": "Coverage",
+    "Maven. [org.apache.maven.plugins:maven-archetype-plugin:RELEASE:generate].executor": "Run",
+    "Maven.aston-homework-2 [clean].executor": "Run",
+    "Maven.aston-homework-2 [deploy].executor": "Run",
+    "Maven.aston-homework-2 [jetty:run].executor": "Run",
+    "Maven.aston-homework-2 [package].executor": "Run",
+    "Maven.servlet [clean].executor": "Run",
+    "Maven.servlet [package].executor": "Run",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "Tomcat Server.Unnamed.executor": "Debug",
+    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary": "JUnit5",
+    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5": "",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/Denis/java-explore-with-me",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "vue.rearranger.settings.migration": "true"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;DatabaseDriversLRU&quot;: [
-      &quot;postgresql&quot;
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "postgresql"
     ]
   }
-}</component>
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CreateTestDialog.Recents.Supers">
+      <recent name="" />
+    </key>
+    <key name="CreateTestDialog.RecentsKey">
+      <recent name="service.impl" />
+    </key>
+  </component>
   <component name="RunDashboard">
     <option name="openRunningConfigInTab" value="true" />
   </component>
-  <component name="RunManager">
-    <configuration name="aston-homework-2 [jetty:run]" type="MavenRunConfiguration" factoryName="Maven" temporary="true">
-      <MavenSettings>
-        <option name="myGeneralSettings" />
-        <option name="myRunnerSettings" />
-        <option name="myRunnerParameters">
-          <MavenRunnerParameters>
-            <option name="cmdOptions" />
-            <option name="profiles">
-              <set />
-            </option>
-            <option name="goals">
-              <list>
-                <option value="jetty:run" />
-              </list>
-            </option>
-            <option name="multimoduleDir" />
-            <option name="pomFileName" value="pom.xml" />
-            <option name="profilesMap">
-              <map />
-            </option>
-            <option name="projectsCmdOptionValues">
-              <list />
-            </option>
-            <option name="resolveToWorkspace" value="false" />
-            <option name="workingDirPath" value="$PROJECT_DIR$" />
-          </MavenRunnerParameters>
-        </option>
-      </MavenSettings>
-      <method v="2" />
+  <component name="RunManager" selected="JUnit.FilmServiceImplTest">
+    <configuration name="FilmServiceImplTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="aston-homework-2" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="service.impl.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="service.impl" />
+      <option name="MAIN_CLASS_NAME" value="service.impl.FilmServiceImplTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="FilmServiceImplTest.patchFilm_withoutGenre_returnFilm" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="aston-homework-2" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="service.impl.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="service.impl" />
+      <option name="MAIN_CLASS_NAME" value="service.impl.FilmServiceImplTest" />
+      <option name="METHOD_NAME" value="patchFilm_withoutGenre_returnFilm" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="GenreServiceImplTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="aston-homework-2" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="service.impl.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="service.impl" />
+      <option name="MAIN_CLASS_NAME" value="service.impl.GenreServiceImplTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="GenreServiceImplTest.postGenre_withoutName_trowsValidateException" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="aston-homework-2" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="service.impl.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="service.impl" />
+      <option name="MAIN_CLASS_NAME" value="service.impl.GenreServiceImplTest" />
+      <option name="METHOD_NAME" value="postGenre_withoutName_trowsValidateException" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="java in aston-homework-2" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="aston-homework-2" />
+      <option name="TEST_OBJECT" value="directory" />
+      <dir value="$PROJECT_DIR$/src/test/java" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Maven.aston-homework-2 [jetty:run]" />
+        <item itemvalue="JUnit.FilmServiceImplTest" />
+        <item itemvalue="JUnit.java in aston-homework-2" />
+        <item itemvalue="JUnit.GenreServiceImplTest" />
+        <item itemvalue="JUnit.GenreServiceImplTest.postGenre_withoutName_trowsValidateException" />
+        <item itemvalue="JUnit.FilmServiceImplTest.patchFilm_withoutGenre_returnFilm" />
       </list>
     </recent_temporary>
   </component>
@@ -145,6 +224,8 @@
       <workItem from="1710342624171" duration="9212000" />
       <workItem from="1710432170107" duration="10956000" />
       <workItem from="1710515800441" duration="992000" />
+      <workItem from="1710581169133" duration="40051000" />
+      <workItem from="1710772620651" duration="10993000" />
     </task>
     <task id="LOCAL-00001" summary="&lt;feat&gt; Настроить запуск Tomcat">
       <option name="closed" value="true" />
@@ -162,7 +243,39 @@
       <option name="project" value="LOCAL" />
       <updated>1710443666858</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="&lt;feat&gt; Реализовать Post и Get эндпоинты для FilmServlet">
+      <option name="closed" value="true" />
+      <created>1710608549281</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1710608549281</updated>
+    </task>
+    <task id="LOCAL-00004" summary="&lt;feat&gt; Добавить методы Patch, delete в FilmServlet">
+      <option name="closed" value="true" />
+      <created>1710615270832</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1710615270832</updated>
+    </task>
+    <task id="LOCAL-00005" summary="&lt;feat&gt; Добавить реализацию функционала GenreServlet и всех вложенных классов">
+      <option name="closed" value="true" />
+      <created>1710624768618</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1710624768618</updated>
+    </task>
+    <task id="LOCAL-00006" summary="&lt;feat&gt; Добавить DatabaseInitializer, который создает таблицы БД при запуске программы">
+      <option name="closed" value="true" />
+      <created>1710626169583</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1710626169583</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -172,6 +285,17 @@
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="&lt;feat&gt; Настроить запуск Tomcat" />
     <MESSAGE value="&lt;feat&gt; Подключить бд, разбить на все основные слои, начать обрабатывать эндпоинты для фильмов" />
-    <option name="LAST_COMMIT_MESSAGE" value="&lt;feat&gt; Подключить бд, разбить на все основные слои, начать обрабатывать эндпоинты для фильмов" />
+    <MESSAGE value="&lt;feat&gt; Реализовать Post и Get эндпоинты для FilmServlet" />
+    <MESSAGE value="&lt;feat&gt; Добавить методы Patch, delete в FilmServlet" />
+    <MESSAGE value="&lt;feat&gt; Добавить реализацию функционала GenreServlet и всех вложенных классов" />
+    <MESSAGE value="&lt;feat&gt; Добавить DatabaseInitializer, который создает таблицы БД при запуске программы" />
+    <MESSAGE value="&lt;feat&gt; Добавить тесты для слоев сервисов" />
+    <option name="LAST_COMMIT_MESSAGE" value="&lt;feat&gt; Добавить тесты для слоев сервисов" />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/aston_homework_2$FilmServiceImplTest.ic" NAME="FilmServiceImplTest Coverage Results" MODIFIED="1710780619919" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>service.impl.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/aston_homework_2$java_in_aston_homework_2.ic" NAME="java in aston-homework-2 Coverage Results" MODIFIED="1710783738486" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
   </component>
 </project>

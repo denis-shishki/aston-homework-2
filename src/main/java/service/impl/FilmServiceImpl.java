@@ -43,7 +43,7 @@ public class FilmServiceImpl implements FilmService {
     @Override
     public FilmDto getFilmById(long filmId) {
         Optional<Film> filmOptional = filmRepository.getFilmById(filmId);
-        if(filmOptional.isPresent()){
+        if (filmOptional.isPresent()) {
             return FilmMapper.toDto(filmOptional.get());
         } else {
             throw new NotFoundException("Film not found");

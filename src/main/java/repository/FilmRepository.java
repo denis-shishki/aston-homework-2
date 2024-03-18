@@ -9,12 +9,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import static Database.DBInitializer.*;
+
 public class FilmRepository {
 
     public Film postFilm(Film film) {
         boolean presentGenres = film.getGenres() != null;
 
-        try (Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/film", "postgres", "postgres")) {
+        try (Connection connection = DriverManager.getConnection(getUrl(), getUsername(), getPassword())) {
             String sql = "INSERT INTO films (name, description) VALUES( ?, ?);";
 
             try (PreparedStatement preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
@@ -43,7 +45,7 @@ public class FilmRepository {
         Optional<Film> oldFilm = getFilmById(film.getId());
 
         if (oldFilm.isPresent()) {
-            try (Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/film", "postgres", "postgres")) {
+            try (Connection connection = DriverManager.getConnection(getUrl(), getUsername(), getPassword())) {
                 String sql = "update films set name = ?, description = ? where film_id = ?;";
 
                 try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
@@ -95,7 +97,7 @@ public class FilmRepository {
     public Optional<Film> getFilmById(long filmId) {
         Film film;
 
-        try (Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/film", "postgres", "postgres")) {
+        try (Connection connection = DriverManager.getConnection(getUrl(), getUsername(), getPassword())) {
             String sql = "select * from films where film_id = ?;";
 
             try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
@@ -140,7 +142,7 @@ public class FilmRepository {
     }
 
     public void removeFilm(long filmId) {
-        try (Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/film", "postgres", "postgres")) {
+        try (Connection connection = DriverManager.getConnection(getUrl(), getUsername(), getPassword())) {
             String sql = "DELETE FROM films WHERE film_id = ?;";
 
             try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {

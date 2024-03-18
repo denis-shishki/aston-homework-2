@@ -1,11 +1,9 @@
 package service.impl;
 
 import entity.Genre;
-import entity.Genre;
 import entity.dto.GenreDto;
 import exception.NotFoundException;
 import exception.ValidateException;
-import mapper.GenreMapper;
 import mapper.GenreMapper;
 import repository.GenreRepository;
 import service.GenreService;
@@ -34,7 +32,7 @@ public class GenreServiceImpl implements GenreService {
     @Override
     public GenreDto getGenreById(long genreId) {
         Optional<Genre> genreOptional = genreRepository.getGenreById(genreId);
-        if(genreOptional.isPresent()){
+        if (genreOptional.isPresent()) {
             return GenreMapper.toDto(genreOptional.get());
         } else {
             throw new NotFoundException("Genre not found");

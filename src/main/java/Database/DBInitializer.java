@@ -1,3 +1,7 @@
+package Database;
+
+import lombok.Getter;
+
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import java.sql.Connection;
@@ -5,7 +9,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class DatabaseInitializer implements ServletContextListener {
+public class DBInitializer implements ServletContextListener {
     private final String DROP_TABLES = "DROP TABLE IF EXISTS PUBLIC.FILMS CASCADE; " +
             "DROP TABLE IF EXISTS PUBLIC.GENRE CASCADE; " +
             "DROP TABLE IF EXISTS PUBLIC.films_GENRE CASCADE;";
@@ -22,13 +26,17 @@ public class DatabaseInitializer implements ServletContextListener {
             "CONSTRAINT FRIENDS_LIST_PK PRIMARY KEY (film_ID,GENRE_ID), " +
             "CONSTRAINT films_ID_FK FOREIGN KEY (film_ID) REFERENCES PUBLIC.FILMS(film_ID) ON DELETE CASCADE, " +
             "CONSTRAINT GENRE_ID_FK FOREIGN KEY (GENRE_ID) REFERENCES PUBLIC.GENRE(GENRE_ID) ON DELETE CASCADE);";
-    private final String url = "jdbc:postgresql://localhost:5432/film";
-    private final String username = "postgres";
-    private final String password = "postgres";
+    @Getter
+    private static final String url = "jdbc:postgresql://localhost:5432/film";
+    @Getter
+    private static final String username = "postgres";
+    @Getter
+    private static final String password = "postgres";
+
     @Override
     public void contextInitialized(ServletContextEvent sce) {
         try (Connection connection = DriverManager.getConnection(url, username, password);
-             Statement statement = connection.createStatement()){
+             Statement statement = connection.createStatement()) {
 
             statement.executeUpdate(DROP_TABLES);
             statement.executeUpdate(CREATE_TABLE_FILM);

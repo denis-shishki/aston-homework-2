@@ -2,8 +2,6 @@ package mapper;
 
 import entity.Genre;
 import entity.dto.GenreDto;
-import entity.dto.GenreDtoShort;
-import service.GenreService;
 
 public class GenreMapper {
     public static Genre toEntity(GenreDto genreDto) {
@@ -12,6 +10,7 @@ public class GenreMapper {
                 .name(genreDto.getName())
                 .build();
     }
+
     public static GenreDto toDto(Genre genre) {
         return GenreDto.builder()
                 .id(genre.getId())
